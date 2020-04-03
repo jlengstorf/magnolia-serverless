@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Serverless Functions for MagnoliaJS</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+      form {
+        border: 1px solid rgba(40, 40, 40, 0.5);
+        border-radius: 0.5rem;
+        margin: 2rem auto;
+        max-width: 400px;
+        padding: 1rem;
+      }
+
+      label,
+      input {
+        display: block;
+      }
+
+      label {
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+      }
+
+      input {
+        border: 1px solid rgb(40, 40, 40);
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        padding: 0.5rem;
+        width: 100%;
+      }
+
+      button {
+        background: darkblue;
+        border: none;
+        border-radius: 0.5rem;
+        color: white;
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.05em;
+        margin-top: 1rem;
+        padding: 0 1rem;
+        text-transform: uppercase;
+      }
+
+      .privacy {
+        color: rgb(75, 75, 75);
+        font-size: 0.875rem;
+        margin: 2rem 0 0;
+        font-style: italic;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/">
+        <img src="images/magnoliajs.png" alt="MagnoliaJS" />
+      </a>
+      <nav>
+        <a href="/">Hello World</a>
+        <a href="/newsletter.html">Newsletter</a>
+        <a href="/vote.html">Vote</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Demo: use serverless functions to build a newsletter opt-in.</h1>
+      <p>
+        Serverless functions allow us to integrate with third-party APIs using
+        private API keys and other sensitive data in a secure way
+        <em>without</em> requiring us to build a full-on server.
+      </p>
+      <p>
+        <strong>NOTE:</strong> Entering your email into this demo will actually
+        sign you up for
+        <a href="https://www.learnwithjason.dev/newsletter">my newsletter</a>.
+        You’ll receive a confirmation email after opting in. So if you want to
+        get content about building better websites, y’know, wink wink nudge
+        nudge...
+      </p>
+      <form action="/.netlify/functions/subscribe" method="POST">
+        <h2>Build better web apps</h2>
+        <p>
+          I spend a lot of time thinking about how to
+          <strong
+            >build web experiences that are fast, secure, maintainable,
+            scalable, and fun to build.</strong
+          >
+        </p>
+        <p>
+          Join my newsletter and I’ll boop you on the brain what I’ve learned
+          about building modern web apps.
+        </p>
+        <label htmlFor="firstName"
+          >First Name <input type="text" name="firstName" id="firstName"
+        /></label>
+        <label htmlFor="email"
+          >Email <input type="email" name="email" id="email"
+        /></label>
+        <button type="submit">
+          Subscribe
+        </button>
+        <p class="privacy">
+          <strong>Privacy notice:</strong> I will never sell or share your
+          personal information with anyone (because I’m not a jerk). Unsubscribe
+          at any time with one click.
+        </p>
+      </form>
+    </main>
+  </body>
+</html>
