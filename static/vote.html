@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preload" href="https://d3js.org/d3.v5.min.js" as="script" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Serverless Functions for MagnoliaJS</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+      h1,
+      p {
+        text-align: center;
+      }
+
+      .vote {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(4, 1fr);
+        margin: 2rem auto;
+        max-width: 300px;
+      }
+
+      .vote div {
+        position: relative;
+      }
+
+      input[type='radio'] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        z-index: -1;
+      }
+
+      label {
+        background: rgba(191, 82, 114, 0.1);
+        border: 2px solid rgba(40, 40, 40, 0.25);
+        border-radius: 0.5rem;
+        display: block;
+        font-size: 2rem;
+        padding: 0.25rem;
+        position: relative;
+        text-align: center;
+        text-shadow: 1px 1px white, 1px -1px white, -1px 1px white,
+          -1px -1px white;
+      }
+
+      input:focus + label {
+        border: 2px solid rgb(191, 82, 114);
+      }
+
+      input:checked + label {
+        background: rgba(191, 82, 114, 0.8);
+      }
+
+      button {
+        background: rgb(191, 82, 114);
+        border: none;
+        border-radius: 0.5rem;
+        color: white;
+        font-size: 2rem;
+        font-weight: 800;
+        grid-column: 1 / 5;
+        text-transform: uppercase;
+      }
+
+      .result-wrapper {
+        display: none;
+      }
+
+      .result-wrapper a {
+        display: block;
+        margin-top: 1.5rem;
+      }
+
+      .chart {
+        align-items: end;
+        border-bottom: 4px solid rgb(40, 40, 40);
+        display: grid;
+        gap: 0.25rem;
+        grid-template-columns: repeat(4, 1fr);
+        height: calc(254px + 0.25rem);
+        margin-top: 3rem;
+        padding: 0 0.5rem;
+      }
+      .bar {
+        background: #bf5272;
+        border-radius: 0.5rem 0.5rem 0 0;
+        margin: 0.25rem 0.25rem 0;
+      }
+
+      .bar span {
+        color: white;
+        display: block;
+        font-size: 2rem;
+        font-weight: 800;
+        padding: 0.5rem;
+        text-align: center;
+        text-shadow: 1px 1px black, 1px -1px black, -1px 1px black,
+          -1px -1px black;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/">
+        <img src="images/magnoliajs.png" alt="MagnoliaJS" />
+      </a>
+      <nav>
+        <a href="/">Hello World</a>
+        <a href="/newsletter.html">Newsletter</a>
+        <a href="/vote.html">Vote</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Vote for your favorite food!</h1>
+      <p>
+        This is extremely important. What is the best food?
+      </p>
+      <noscript>JavaScript is required to see this demo.</noscript>
+
+      <form class="vote" action="/.netlify/functions/vote" method="post">
+        <div>
+          <input type="radio" name="value" id="pizza" value="🍕" /><label
+            for="pizza"
+            >🍕</label
+          >
+        </div>
+        <div>
+          <input type="radio" name="value" id="burger" value="🍔" /><label
+            for="burger"
+            >🍔</label
+          >
+        </div>
+        <div>
+          <input type="radio" name="value" id="burrito" value="🌯" /><label
+            for="burrito"
+            >🌯</label
+          >
+        </div>
+        <div>
+          <input type="radio" name="value" id="taco" value="🌮" /><label
+            for="taco"
+            >🌮</label
+          >
+        </div>
+        <button type="submit">Vote!</button>
+      </form>
+
+      <div class="result-wrapper">
+        <div class="results"></div>
+        <a href="/vote.html">&larr; back to voting</a>
+      </div>
+    </main>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+      function showResults() {
+        const chart = d3
+          .select('.results')
+          .append('div')
+          .attr('class', 'chart');
+
+        async function loadData() {
+          return await fetch('/.netlify/functions/get-votes')
+            .then(res => res.json())
+            .catch(err => console.log(err));
+        }
+
+        async function buildChart() {
+          const data = await loadData();
+          const scale = d3
+            .scaleLinear()
+            .domain([0, d3.max(data.map(d => d.votes))])
+            .range([0, 250]);
+
+          // remove any old data
+          chart
+            .selectAll('div')
+            .remove()
+            .exit();
+
+          // update with new data
+          chart
+            .selectAll('div')
+            .data(data)
+            .join('div')
+            .attr('class', 'bar')
+            .style('height', d => `${scale(d.votes)}px`)
+            .html(d => `<span>${d.value}<br />${d.votes}</span>`);
+        }
+
+        buildChart();
+        setInterval(buildChart, 5000);
+      }
+
+      const url = new URL(window.location);
+      if (url.searchParams.has('voted')) {
+        document.querySelector('.vote').style.display = 'none';
+        document.querySelector('.result-wrapper').style.display = 'block';
+        showResults();
+      }
+    </script>
+  </body>
+</html>
