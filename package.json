@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "functions": "pushd functions && yarn && popd"
+    "functions": "cd functions && yarn && cd .."
   },
   "author": "Jason Lengstorf <jason@lengstorf.com> (https://lengstorf.com)",
   "license": "MIT"
