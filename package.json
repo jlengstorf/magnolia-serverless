@@ -2,6 +2,9 @@
   "name": "magnolia-serverless",
   "version": "0.0.1",
   "main": "index.js",
+  "scripts": {
+    "functions": "pushd functions && yarn && popd"
+  },
   "author": "Jason Lengstorf <jason@lengstorf.com> (https://lengstorf.com)",
   "license": "MIT"
 }
