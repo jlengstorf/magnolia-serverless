@@ -182,9 +182,8 @@
           .attr('class', 'chart');
 
         async function loadData() {
-          return await fetch('/.netlify/functions/get-votes')
-            .then((res) => res.json())
-            .catch((err) => console.log(err));
+          // TODO load data
+          return [];
         }
 
         async function buildChart() {

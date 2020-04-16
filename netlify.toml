@@ -1,2 +1,4 @@
 [build]
-  publish = "src"
+  publish = "static"
+  functions = "functions"
+  command = "npm run functions"
