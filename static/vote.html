@@ -120,8 +120,7 @@
       </p>
       <noscript><p>JavaScript is required to see this demo.</p></noscript>
 
-      <!-- TODO add form submission handling -->
-      <form class="vote">
+      <form class="vote" action="/.netlify/functions/vote" method="post">
         <div>
           <input type="radio" name="value" id="pizza" value="🍕" /><label
             for="pizza"
@@ -182,8 +181,9 @@
           .attr('class', 'chart');
 
         async function loadData() {
-          // TODO load data
-          return [];
+          return await fetch('/.netlify/functions/get-votes')
+            .then((res) => res.json())
+            .catch((err) => console.error(err));
         }
 
         async function buildChart() {

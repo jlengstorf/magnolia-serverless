@@ -35,7 +35,7 @@
       </p>
 
       <!-- TODO add a newsletter form -->
-      <form>
+      <form action="/.netlify/functions/subscribe" method="POST">
         <h2>Build better web apps</h2>
         <p>
           I spend a lot of time thinking about how to
@@ -49,7 +49,15 @@
           about building modern web apps.
         </p>
 
-        <!-- TODO add form controls -->
+        <label for="firstName"
+          >First Name <input type="text" name="firstName" id="firstName"
+        /></label>
+        <label for="email"
+          >Email <input type="email" name="email" id="email"
+        /></label>
+        <button type="submit">
+          Subscribe
+        </button>
 
         <p class="privacy">
           <strong>Privacy notice:</strong> I will never sell or share your
