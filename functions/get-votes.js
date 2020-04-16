@@ -9,7 +9,7 @@ exports.handler = async () => {
     body: JSON.stringify({
       query: `
         query {
-          votes {
+          votes(_size: 10000) {
             data {
               value
             }
