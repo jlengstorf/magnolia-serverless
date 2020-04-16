@@ -1,7 +1,0 @@
-type Vote {
-  value: String!
-}
-
-type Query {
-  votes: [Vote!]!
-}

@@ -118,9 +118,10 @@
       <p>
         This is extremely important. What is the best food?
       </p>
-      <noscript>JavaScript is required to see this demo.</noscript>
+      <noscript><p>JavaScript is required to see this demo.</p></noscript>
 
-      <form class="vote" action="/.netlify/functions/vote" method="post">
+      <!-- TODO add form submission handling -->
+      <form class="vote">
         <div>
           <input type="radio" name="value" id="pizza" value="🍕" /><label
             for="pizza"
@@ -182,22 +183,19 @@
 
         async function loadData() {
           return await fetch('/.netlify/functions/get-votes')
-            .then(res => res.json())
-            .catch(err => console.log(err));
+            .then((res) => res.json())
+            .catch((err) => console.log(err));
         }
 
         async function buildChart() {
           const data = await loadData();
           const scale = d3
             .scaleLinear()
-            .domain([0, d3.max(data.map(d => d.votes))])
+            .domain([0, d3.max(data.map((d) => d.votes))])
             .range([0, 250]);
 
           // remove any old data
-          chart
-            .selectAll('div')
-            .remove()
-            .exit();
+          chart.selectAll('div').remove().exit();
 
           // update with new data
           chart
@@ -205,8 +203,8 @@
             .data(data)
             .join('div')
             .attr('class', 'bar')
-            .style('height', d => `${scale(d.votes)}px`)
-            .html(d => `<span>${d.value}<br />${d.votes}</span>`);
+            .style('height', (d) => `${scale(d.votes)}px`)
+            .html((d) => `<span>${d.value}<br />${d.votes}</span>`);
         }
 
         buildChart();

@@ -69,6 +69,53 @@ h2 {
   color: rgb(40, 40, 40);
 }
 
+form {
+  border: 1px solid rgba(40, 40, 40, 0.5);
+  border-radius: 0.5rem;
+  margin: 2rem auto;
+  max-width: 400px;
+  padding: 1rem;
+}
+
+label,
+input {
+  display: block;
+}
+
+label {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+input {
+  border: 1px solid rgb(40, 40, 40);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+button {
+  background: darkblue;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  margin-top: 1rem;
+  padding: 0 1rem;
+  text-transform: uppercase;
+}
+
+.privacy {
+  color: rgb(75, 75, 75);
+  font-size: 0.875rem;
+  margin: 2rem 0 0;
+  font-style: italic;
+  text-align: center;
+}
+
 footer {
   border-top: 1px solid rgba(90, 90, 90, 0.5);
   padding-top: 0.25rem;

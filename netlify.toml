@@ -1,4 +1,2 @@
 [build]
-  command = "yarn functions"
-  publish = "static"
-  functions = "functions"
+  publish = "src"
